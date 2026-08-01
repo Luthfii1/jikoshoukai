@@ -5,7 +5,9 @@
   },
   "nav": {
     "present": "プレゼン",
-    "explore": "探索"
+    "explore": "探索",
+    "next": "つぎへ",
+    "scroll": "スクロール"
   },
   "hero": {
     "name": "Luthfi",

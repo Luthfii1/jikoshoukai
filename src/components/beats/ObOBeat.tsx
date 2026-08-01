@@ -11,7 +11,9 @@ export function ObOBeat() {
   const ref = useRef<HTMLElement>(null);
   const [count, setCount] = useState(0);
   const [screen, setScreen] = useState(0);
+  const [dragging, setDragging] = useState(false);
   const started = useRef(false);
+  const dragX = useRef(0);
 
   const screens = [
     getPhoto("obo-screen-1", locale),
@@ -35,7 +37,7 @@ export function ObOBeat() {
           return;
         }
         const start = performance.now();
-        const duration = 1600;
+        const duration = 1800;
         const tick = (now: number) => {
           const p = Math.min(1, (now - start) / duration);
           const eased = 1 - Math.pow(1 - p, 3);
@@ -51,50 +53,98 @@ export function ObOBeat() {
   }, []);
 
   useEffect(() => {
-    const id = setInterval(() => setScreen((s) => (s + 1) % 3), 2800);
+    if (dragging) return;
+    const id = setInterval(() => setScreen((s) => (s + 1) % 3), 3000);
     return () => clearInterval(id);
-  }, []);
+  }, [dragging]);
+
+  function onPointerDown(e: React.PointerEvent) {
+    setDragging(true);
+    dragX.current = e.clientX;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  }
+
+  function onPointerUp(e: React.PointerEvent) {
+    const dx = e.clientX - dragX.current;
+    setDragging(false);
+    if (Math.abs(dx) < 40) return;
+    setScreen((s) => (dx < 0 ? (s + 1) % 3 : (s + 2) % 3));
+  }
 
   return (
     <section
       id="beat-obo"
       ref={ref}
-      className="beat flex items-center bg-[var(--bg-primary)]"
+      data-atmosphere="warm"
+      className="beat relative flex items-center overflow-hidden bg-[var(--bg-warm)]"
     >
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-12 px-6 py-24 md:flex-row md:justify-between md:px-10">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-12 px-6 py-24 md:flex-row md:justify-between md:px-10 md:pl-16">
         <div className="md:w-1/2">
-          <div className="mb-4 flex items-center gap-3">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mb-3 text-[10px] font-semibold tracking-[0.22em] text-[var(--accent-deep)] uppercase"
+          >
+            Chapter · Ship
+          </motion.p>
+          <div className="mb-5 flex items-center gap-3">
             <PhotoSlot
               src={icon.src}
               alt={icon.alt}
-              className="h-12 w-12 rounded-2xl shadow-md"
+              className="h-12 w-12 rounded-2xl shadow-md ring-2 ring-white"
             />
-            <span className="text-sm font-medium text-[var(--ink-mute)]">
-              ObO
-            </span>
+            <span className="text-sm font-semibold text-[var(--ink)]">ObO</span>
           </div>
-          <p className="tabular text-6xl font-black text-[var(--accent)] md:text-8xl">
+
+          <p className="tabular text-6xl font-black tracking-tight text-[var(--accent)] md:text-8xl">
             {count.toLocaleString()}
             {count >= 4000 ? "+" : ""}
           </p>
           <p className="mt-1 mb-8 text-sm tracking-widest text-[var(--ink-mute)] uppercase">
             {t.obo.label}
           </p>
+
           <p className="mb-3 text-xl font-semibold text-[var(--ink)] md:text-2xl">
             {t.obo.line}
           </p>
-          <p className="text-[var(--ink-soft)]">{t.obo.punch}</p>
+          <p
+            className={`text-lg text-[var(--accent-deep)] md:text-xl ${
+              locale === "en" ? "en-display" : "display"
+            }`}
+          >
+            {t.obo.punch}
+          </p>
         </div>
 
         <div className="relative">
-          <div className="relative mx-auto h-[420px] w-[210px] overflow-hidden rounded-[2rem] border-[6px] border-[var(--ink)] bg-[var(--ink)] shadow-[0_30px_80px_rgba(26,26,46,0.25)] md:h-[480px] md:w-[240px]">
-            <div className="absolute top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-black/80" />
+          {/* Soft glow behind phone */}
+          <div
+            aria-hidden
+            className="absolute top-1/2 left-1/2 h-64 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)]/25 blur-3xl"
+          />
+
+          <div
+            className="relative mx-auto h-[420px] w-[210px] touch-pan-y overflow-hidden rounded-[2.2rem] border-[7px] border-[var(--ink)] bg-[var(--ink)] shadow-[0_40px_90px_rgba(26,26,46,0.28),inset_0_0_0_1px_rgba(255,255,255,0.08)] md:h-[500px] md:w-[250px]"
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={() => setDragging(false)}
+            role="img"
+            aria-label="ObO app preview"
+          >
+            {/* Dynamic island */}
+            <div className="absolute top-2.5 left-1/2 z-20 h-6 w-[78px] -translate-x-1/2 rounded-full bg-black" />
+            {/* Screen glare */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-white/15 via-transparent to-transparent"
+            />
             <AnimatePresence mode="wait">
               <motion.div
                 key={screen}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 28 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, x: -28 }}
                 transition={{ duration: 0.35 }}
                 className="h-full w-full"
               >
@@ -106,14 +156,20 @@ export function ObOBeat() {
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="mt-4 flex justify-center gap-2">
+
+          <p className="mt-3 text-center text-[10px] tracking-wide text-[var(--ink-mute)]">
+            {locale === "ja" ? "スワイプで画面切替" : "Swipe to browse screens"}
+          </p>
+          <div className="mt-2 flex justify-center gap-2">
             {screens.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setScreen(i)}
-                className={`h-1.5 w-1.5 rounded-full ${
-                  i === screen ? "bg-[var(--accent)]" : "bg-[var(--line)]"
+                className={`h-1.5 rounded-full transition-all ${
+                  i === screen
+                    ? "w-5 bg-[var(--accent)]"
+                    : "w-1.5 bg-[var(--line)]"
                 }`}
                 aria-label={`Screen ${i + 1}`}
               />

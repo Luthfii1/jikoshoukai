@@ -13,6 +13,7 @@ export function TokyoBeat() {
   return (
     <section
       id="beat-tokyo"
+      data-atmosphere="soft"
       className="beat flex items-center bg-[var(--bg-soft)]"
     >
       <div className="mx-auto w-full max-w-5xl px-6 py-24 md:px-10">

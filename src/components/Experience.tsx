@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { PresentationProvider } from "@/contexts/PresentationContext";
-import { ProgressDots, TopBar } from "@/components/Shell";
+import { JourneyRail, MobileProgress, PresentHUD, TopBar } from "@/components/Shell";
 import { HeroBeat } from "@/components/beats/HeroBeat";
 import { ExplorerBeat } from "@/components/beats/ExplorerBeat";
 import { WorldBeat } from "@/components/beats/WorldBeat";
@@ -13,12 +16,29 @@ import { ObOBeat } from "@/components/beats/ObOBeat";
 import { TokyoBeat } from "@/components/beats/TokyoBeat";
 import { ClosingBeat } from "@/components/beats/ClosingBeat";
 
+function ScrollRefresh() {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const id = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    return () => {
+      window.cancelAnimationFrame(id);
+      window.removeEventListener("load", onLoad);
+    };
+  }, []);
+  return null;
+}
+
 export function Experience() {
   return (
     <LocaleProvider>
       <PresentationProvider>
+        <ScrollRefresh />
         <TopBar />
-        <ProgressDots />
+        <MobileProgress />
+        <JourneyRail />
+        <PresentHUD />
         <main>
           <HeroBeat />
           <ExplorerBeat />

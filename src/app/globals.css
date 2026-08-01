@@ -8,6 +8,7 @@
   --bg-primary: #ffffff;
   --bg-soft: #faf9f7;
   --bg-warm: #fff3e8;
+  --bg-cool: #f3f6f9;
   --accent: #e8934a;
   --accent-deep: #c9742f;
   --ink: #1a1a2e;
@@ -23,6 +24,7 @@
   --color-bg: var(--bg-primary);
   --color-bg-soft: var(--bg-soft);
   --color-bg-warm: var(--bg-warm);
+  --color-bg-cool: var(--bg-cool);
   --color-accent: var(--accent);
   --color-accent-deep: var(--accent-deep);
   --color-ink: var(--ink);
@@ -39,7 +41,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Keep auto — smooth breaks GSAP ScrollTrigger pin/scrub */
+  scroll-behavior: auto;
 }
 
 html.present-mode {
@@ -78,6 +81,8 @@ body {
   position: relative;
   min-height: 100svh;
   width: 100%;
+  isolation: isolate;
+  background-color: var(--bg-primary);
 }
 
 html.present-mode .beat {

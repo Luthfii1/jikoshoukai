@@ -5,7 +5,9 @@
   },
   "nav": {
     "present": "Present",
-    "explore": "Explore"
+    "explore": "Explore",
+    "next": "Next",
+    "scroll": "Scroll"
   },
   "hero": {
     "name": "Luthfi",
