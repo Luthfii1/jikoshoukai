@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAF9F7"/>
+      <stop offset="100%" style="stop-color:#E8934A;stop-opacity:0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="390" height="844" fill="url(#g)"/>
+  <circle cx="304.2" cy="185.68" r="46.8" fill="#E8934A" opacity="0.15"/>
+  <text x="50%" y="48%" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" fill="#E8934A" font-weight="600">ObO screen 1</text>
+  <text x="50%" y="56%" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#4A4A5A" opacity="0.7">Replace with real photo</text>
+</svg>

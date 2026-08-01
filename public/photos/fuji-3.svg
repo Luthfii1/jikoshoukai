@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8A4A"/>
+      <stop offset="100%" style="stop-color:#FFD0A0;stop-opacity:0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <circle cx="1497.6000000000001" cy="237.6" r="129.6" fill="#FFD0A0" opacity="0.15"/>
+  <text x="50%" y="48%" text-anchor="middle" font-family="system-ui,sans-serif" font-size="60" fill="#FFD0A0" font-weight="600">fuji-3 · SUMMIT</text>
+  <text x="50%" y="56%" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" fill="#4A4A5A" opacity="0.7">Replace with real photo</text>
+</svg>

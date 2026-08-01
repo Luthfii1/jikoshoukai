@@ -1,0 +1,87 @@
+{
+  "hero-portrait": {
+    "src": "/photos/hero-portrait.svg",
+    "alt": { "ja": "Luthfiのポートレート", "en": "Portrait of Luthfi" },
+    "orient": "portrait"
+  },
+  "taiwan-1": {
+    "src": "/photos/taiwan-1.svg",
+    "alt": { "ja": "台湾でのインターン", "en": "Internship in Taiwan" },
+    "orient": "landscape"
+  },
+  "taiwan-2": {
+    "src": "/photos/taiwan-2.svg",
+    "alt": { "ja": "NTUSTキャンパス", "en": "NTUST campus" },
+    "orient": "landscape"
+  },
+  "thailand-1": {
+    "src": "/photos/thailand-1.svg",
+    "alt": { "ja": "バンコクのSDGプログラム", "en": "SDG program in Bangkok" },
+    "orient": "landscape"
+  },
+  "korea-1": {
+    "src": "/photos/korea-1.svg",
+    "alt": { "ja": "KAISTマスターキャンプ", "en": "KAIST Master Camp" },
+    "orient": "landscape"
+  },
+  "usa-1": {
+    "src": "/photos/usa-1.svg",
+    "alt": { "ja": "アメリカでのリーダーシッププログラム", "en": "Leadership program in the USA" },
+    "orient": "landscape"
+  },
+  "osaka-1": {
+    "src": "/photos/osaka-1.svg",
+    "alt": { "ja": "大阪・関西万博 2025", "en": "Osaka Expo 2025" },
+    "orient": "landscape"
+  },
+  "osaka-2": {
+    "src": "/photos/osaka-2.svg",
+    "alt": { "ja": "万博でのコンペ", "en": "Competition at Expo" },
+    "orient": "landscape"
+  },
+  "fuji-1": {
+    "src": "/photos/fuji-1.svg",
+    "alt": { "ja": "富士山登山のスタート", "en": "Start of Mt. Fuji climb" },
+    "orient": "landscape"
+  },
+  "fuji-2": {
+    "src": "/photos/fuji-2.svg",
+    "alt": { "ja": "夜通しの登山", "en": "Night climb" },
+    "orient": "landscape"
+  },
+  "fuji-3": {
+    "src": "/photos/fuji-3.svg",
+    "alt": { "ja": "富士山頂でのご来光", "en": "Sunrise at Mt. Fuji summit" },
+    "orient": "landscape"
+  },
+  "obo-icon": {
+    "src": "/photos/obo-icon.svg",
+    "alt": { "ja": "ObOアプリアイコン", "en": "ObO app icon" },
+    "orient": "square"
+  },
+  "obo-screen-1": {
+    "src": "/photos/obo-screen-1.svg",
+    "alt": { "ja": "ObOアプリ画面1", "en": "ObO app screen 1" },
+    "orient": "portrait"
+  },
+  "obo-screen-2": {
+    "src": "/photos/obo-screen-2.svg",
+    "alt": { "ja": "ObOアプリ画面2", "en": "ObO app screen 2" },
+    "orient": "portrait"
+  },
+  "obo-screen-3": {
+    "src": "/photos/obo-screen-3.svg",
+    "alt": { "ja": "ObOアプリ画面3", "en": "ObO app screen 3" },
+    "orient": "portrait"
+  },
+  "tokyo-1": {
+    "src": "/photos/tokyo-1.svg",
+    "alt": { "ja": "東京を探索", "en": "Exploring Tokyo" },
+    "orient": "landscape"
+  },
+  "tokyo-2": {
+    "src": "/photos/tokyo-2.svg",
+    "alt": { "ja": "日本語の勉強", "en": "Studying Japanese" },
+    "orient": "landscape"
+  }
+}

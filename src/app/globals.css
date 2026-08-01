@@ -1,0 +1,128 @@
+@import "tailwindcss";
+@import "@fontsource/zen-kaku-gothic-new/400.css";
+@import "@fontsource/zen-kaku-gothic-new/500.css";
+@import "@fontsource/zen-kaku-gothic-new/700.css";
+@import "@fontsource/zen-kaku-gothic-new/900.css";
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-soft: #faf9f7;
+  --bg-warm: #fff3e8;
+  --accent: #e8934a;
+  --accent-deep: #c9742f;
+  --ink: #1a1a2e;
+  --ink-soft: #4a4a5a;
+  --ink-mute: #8a8a9a;
+  --line: #e8e4de;
+  --font-display: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, sans-serif;
+  --font-en: var(--font-syne), "Syne", sans-serif;
+}
+
+@theme inline {
+  --color-bg: var(--bg-primary);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-warm: var(--bg-warm);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-line: var(--line);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-en: var(--font-en);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.present-mode {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+html.present-mode body {
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg-primary);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.beat {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+}
+
+html.present-mode .beat {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.en-display {
+  font-family: var(--font-en);
+  letter-spacing: -0.03em;
+}
+
+/* Soft paper grain */
+.grain::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html.present-mode::-webkit-scrollbar {
+  display: none;
+}
+html.present-mode {
+  scrollbar-width: none;
+}

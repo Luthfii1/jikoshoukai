@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "Luthfi — Self Introduction",
+    "description": "Jakarta to Tokyo. An interactive self-introduction by Explorer Luthfi (Rufi)."
+  },
+  "nav": {
+    "present": "Present",
+    "explore": "Explore"
+  },
+  "hero": {
+    "name": "Luthfi",
+    "pill": "Call me Rufi",
+    "sub": "Jakarta → Tokyo",
+    "eyebrow": "From Indonesia · Software Engineer",
+    "cta": "Start the journey ↓",
+    "naruto": "Naruto",
+    "onePiece": "One Piece",
+    "narutoNote": "Always down to talk",
+    "onePieceNote": "Haven't watched it"
+  },
+  "explorer": {
+    "headline": "One word that describes me.",
+    "words": {
+      "places": { "label": "Places", "hint": "I love wandering new cities." },
+      "tech": { "label": "Technology", "hint": "Curious? I touch it." },
+      "food": { "label": "Food", "hint": "Unknown flavors are part of the adventure." },
+      "products": { "label": "Products", "hint": "I build to find out." }
+    },
+    "quote": "\"If I'm curious, I just try it.\"",
+    "sub": "I never stop at just reading about it.",
+    "watermark": "EXPLORER"
+  },
+  "world": {
+    "headline": "Around the world.",
+    "badge": "All free.",
+    "sub": "As a student I had no money — so I applied to every program and competition I could.",
+    "counterLabel": "Total travel cost",
+    "counterValue": "¥0",
+    "counterCaption": "The only thing I paid for was souvenirs.",
+    "countries": {
+      "taiwan": {
+        "name": "Taiwan",
+        "program": "NTUST Internship",
+        "year": "2022",
+        "story": "Researching 5G networks. My first internship abroad."
+      },
+      "thailand": {
+        "name": "Thailand",
+        "program": "Summer SDG Program",
+        "year": "2023",
+        "story": "An international program on the SDGs, in Bangkok."
+      },
+      "korea": {
+        "name": "Korea",
+        "program": "KAIST Master Camp",
+        "year": "2023",
+        "story": "A program at Korea's top science university, in Seoul."
+      },
+      "usa": {
+        "name": "USA",
+        "program": "Leadership Program",
+        "year": "2023",
+        "story": "Selected for a leadership program. Applied on a whim and got in."
+      }
+    }
+  },
+  "osaka": {
+    "headline": "Osaka Expo 2025",
+    "tags": ["Competition", "Finalist", "2025"],
+    "steps": [
+      "This wasn't just sightseeing.",
+      "I took part as a competition finalist.",
+      "Representing Indonesia on a global stage — that made me proud."
+    ]
+  },
+  "fuji": {
+    "headline": "Climbing Mt. Fuji.",
+    "unit": "m",
+    "stops": [
+      "Setting off with my hiking club.",
+      "Climbing through the night.",
+      "Sunrise at the summit. Never forgetting this."
+    ]
+  },
+  "tech": {
+    "headline": "Technology & Products.",
+    "steps": [
+      {
+        "title": "Apple Developer Academy",
+        "body": "Jakarta. Learned how to build products people actually use."
+      },
+      {
+        "title": "Startup (on pause)",
+        "body": "Took on healthcare. Hard — but I learned the most here."
+      },
+      {
+        "title": "ObO App",
+        "body": "An app for myself that became for everyone."
+      }
+    ]
+  },
+  "obo": {
+    "number": "4,000+",
+    "label": "downloads",
+    "line": "Anki was expensive, so I built my own.",
+    "punch": "Before I knew it, 4,000+ people were using it."
+  },
+  "tokyo": {
+    "headline": "Life in Tokyo.",
+    "cardA": {
+      "title": "Exploring the city",
+      "body": "Wandering Tokyo on weekends. So many places I don't know yet.",
+      "badge": "Sat–Sun"
+    },
+    "cardB": {
+      "title": "Studying Japanese",
+      "body": "Every day, to grow my vocabulary. I use ObO myself too.",
+      "badge": "Daily"
+    },
+    "footnote": "Living solo in a sharehouse in Itabashi — because it's cheaper."
+  },
+  "closing": {
+    "headline": "The one thing I haven't explored in Tokyo:",
+    "highlight": "Your recommendations",
+    "body": "I have a 4-day holiday next week. If you know a great place or food, please tell me — I'll take real notes.",
+    "placeholder": "Suggest a place or food…",
+    "submit": "Send recommendation",
+    "submitted": "Thanks! Noted.",
+    "signOff": "Yoroshiku onegaishimasu!",
+    "qrCaption": "Share this page",
+    "holiday": "4-day holiday next week"
+  }
+}
