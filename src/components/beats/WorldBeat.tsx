@@ -99,7 +99,7 @@ const ROUTE: Stop[] = [
     countryKey: "korea",
     labelJa: "韓国",
     labelEn: "Korea",
-    coords: [126.978, 37.5665],
+    coords: [127.3845, 36.3504],
     zoom: 4.9,
     flag: "🇰🇷",
     photo: "korea-1",

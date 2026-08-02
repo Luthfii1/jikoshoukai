@@ -47,7 +47,7 @@
       "taiwan": {
         "name": "Taiwan",
         "program": "NTUST Internship",
-        "year": "2022",
+        "year": "2023",
         "story": "Researching 5G networks. My first internship abroad."
       },
       "thailand": {
@@ -65,13 +65,13 @@
       "korea": {
         "name": "Korea",
         "program": "KAIST Master Camp",
-        "year": "2023",
-        "story": "A program at Korea's top science university, in Seoul."
+        "year": "2025",
+        "story": "A program at Korea's top science university, in Daejeon."
       },
       "usa": {
         "name": "Washington, D.C.",
         "program": "Leadership Program",
-        "year": "2023",
+        "year": "2025",
         "story": "Selected for a leadership program. Applied on a whim and got in."
       }
     }
@@ -143,7 +143,7 @@
     },
     "cardB": {
       "title": "Studying Japanese",
-      "body": "Every day, to grow my vocabulary. I use ObO myself too.",
+      "body": "Every day, to grow my vocabulary. I learn it every day even when it's hard for me.",
       "badge": "Daily"
     },
     "footnote": "Living solo in a sharehouse in Itabashi — because it's cheaper."
