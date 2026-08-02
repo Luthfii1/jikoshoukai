@@ -169,7 +169,7 @@ export function PresentHUD() {
         <button
           type="button"
           onClick={goPrev}
-          className="rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs text-white/80 backdrop-blur transition hover:bg-white/20"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-white text-sm font-semibold text-[var(--ink)] shadow-[0_8px_24px_rgba(26,26,46,0.12)] transition hover:border-[var(--accent)] hover:text-[var(--accent-deep)]"
           aria-label="Previous"
         >
           ←

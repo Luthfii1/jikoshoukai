@@ -7,36 +7,119 @@ import { useLocale } from "@/contexts/LocaleContext";
 
 const STORAGE_KEY = "jikoshoukai-recs";
 
+type Recommendation = {
+  id: string;
+  text: string;
+  createdAt: string;
+};
+
 const NOTE_COLORS = ["#FFF8E8", "#F5F0FF", "#EAF6F0", "#FFF0EB", "#F0F4FA"];
 const NOTE_ROTATIONS = [-3, 2, -1.5, 3.5, -2.5, 1, -4, 2.5];
+
+function toNotes(items: Recommendation[]): Recommendation[] {
+  return items.slice(0, 20);
+}
+
+function fromLocalStrings(raw: string[]): Recommendation[] {
+  return raw.map((text, i) => ({
+    id: `local-${i}-${text.slice(0, 12)}`,
+    text,
+    createdAt: new Date(0).toISOString(),
+  }));
+}
 
 export function ClosingBeat() {
   const { t, locale } = useLocale();
   const [value, setValue] = useState("");
   const [done, setDone] = useState(false);
-  const [recs, setRecs] = useState<string[]>([]);
+  const [sending, setSending] = useState(false);
+  const [shared, setShared] = useState(false);
+  const [recs, setRecs] = useState<Recommendation[]>([]);
   const [url, setUrl] = useState("https://github.com/Luthfii1/jikoshoukai");
 
   useEffect(() => {
     setUrl(window.location.origin + window.location.pathname);
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setRecs(JSON.parse(raw) as string[]);
-    } catch {
-      /* ignore */
-    }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/recommendations", { cache: "no-store" });
+        if (res.ok) {
+          const data = (await res.json()) as {
+            items?: Recommendation[];
+            shared?: boolean;
+          };
+          if (!cancelled && Array.isArray(data.items)) {
+            setRecs(toNotes(data.items));
+            setShared(!!data.shared);
+            return;
+          }
+        }
+      } catch {
+        /* fall through to local */
+      }
+
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!cancelled && raw) {
+          const parsed = JSON.parse(raw) as unknown;
+          if (Array.isArray(parsed) && parsed.every((x) => typeof x === "string")) {
+            setRecs(fromLocalStrings(parsed));
+          } else if (Array.isArray(parsed)) {
+            setRecs(toNotes(parsed as Recommendation[]));
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     const trimmed = value.trim();
-    if (!trimmed) return;
-    const next = [trimmed, ...recs].slice(0, 20);
-    setRecs(next);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setValue("");
-    setDone(true);
-    setTimeout(() => setDone(false), 2500);
+    if (!trimmed || sending) return;
+
+    setSending(true);
+    try {
+      const res = await fetch("/api/recommendations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: trimmed }),
+      });
+
+      if (res.ok) {
+        const data = (await res.json()) as {
+          items?: Recommendation[];
+          shared?: boolean;
+        };
+        if (Array.isArray(data.items)) {
+          setRecs(toNotes(data.items));
+          setShared(!!data.shared);
+        }
+      } else {
+        // Local fallback when shared storage isn't configured
+        const entry: Recommendation = {
+          id: `local-${Date.now()}`,
+          text: trimmed,
+          createdAt: new Date().toISOString(),
+        };
+        const next = toNotes([entry, ...recs]);
+        setRecs(next);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        setShared(false);
+      }
+
+      setValue("");
+      setDone(true);
+      setTimeout(() => setDone(false), 2500);
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -82,13 +165,20 @@ export function ClosingBeat() {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={t.closing.placeholder}
-              className="flex-1 rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-[var(--ink)] outline-none ring-[var(--accent)] placeholder:text-[var(--ink-mute)] focus:ring-2"
+              maxLength={200}
+              disabled={sending}
+              className="flex-1 rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-[var(--ink)] outline-none ring-[var(--accent)] placeholder:text-[var(--ink-mute)] focus:ring-2 disabled:opacity-60"
             />
             <button
               type="submit"
-              className="rounded-xl bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-deep)]"
+              disabled={sending}
+              className="rounded-xl bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-deep)] disabled:opacity-60"
             >
-              {t.closing.submit}
+              {sending
+                ? locale === "ja"
+                  ? "送信中…"
+                  : "Sending…"
+                : t.closing.submit}
             </button>
           </form>
 
@@ -118,7 +208,7 @@ export function ClosingBeat() {
                 <AnimatePresence initial={false}>
                   {recs.slice(0, 10).map((r, i) => (
                     <motion.li
-                      key={`${r}-${i}`}
+                      key={r.id}
                       initial={{ opacity: 0, scale: 0.7, y: -12, rotate: -8 }}
                       animate={{
                         opacity: 1,
@@ -137,11 +227,22 @@ export function ClosingBeat() {
                         aria-hidden
                         className="absolute top-1.5 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-[var(--accent)]/70"
                       />
-                      {r}
+                      {r.text}
                     </motion.li>
                   ))}
                 </AnimatePresence>
               </ul>
+            )}
+            {recs.length > 0 && (
+              <p className="mt-3 text-[10px] tracking-wide text-[var(--ink-mute)]">
+                {shared
+                  ? locale === "ja"
+                    ? "みんなのおすすめ（共有）"
+                    : "Shared recommendations"
+                  : locale === "ja"
+                    ? "この端末のみ（共有未設定）"
+                    : "This device only (shared storage not configured)"}
+              </p>
             )}
           </div>
 

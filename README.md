@@ -46,7 +46,15 @@ Keys are grouped by beat (`hero`, `explorer`, `world`, …). Language toggle per
 
 ## Recommendations form
 
-Submissions currently save to `localStorage` and show as a wall of chips. To send to Google Sheets, point the form submit handler in `ClosingBeat.tsx` at a webhook URL.
+Submissions save to a shared sticky-note wall via `data/recommendations.json` in this repo (updated through the GitHub Contents API — no database).
+
+1. Create a fine-grained PAT with **Contents: Read and write** for this repo.
+2. Copy `.env.example` → `.env.local` and set `GITHUB_TOKEN` (and optionally `GITHUB_REPO`).
+3. On Vercel: Project → Settings → Environment Variables → add the same vars → redeploy.
+
+Without a token, the form still works but only on that visitor’s browser (`localStorage`).
+
+You can also browse submissions in [`data/recommendations.json`](data/recommendations.json).
 
 ## Deploy
 
