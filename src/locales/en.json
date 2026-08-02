@@ -14,7 +14,6 @@
     "pill": "Call me Rufi",
     "sub": "Jakarta → Tokyo",
     "eyebrow": "From Indonesia · Software Engineer",
-    "cta": "Start the journey ↓",
     "naruto": "Naruto",
     "onePiece": "One Piece",
     "narutoNote": "Always down to talk",
@@ -40,6 +39,12 @@
     "counterValue": "¥0",
     "counterCaption": "The only thing I paid for was souvenirs.",
     "countries": {
+      "jakarta": {
+        "name": "Jakarta",
+        "program": "Home base",
+        "year": "Start",
+        "story": "Where every journey started — and where I left for the world."
+      },
       "taiwan": {
         "name": "Taiwan",
         "program": "NTUST Internship",
@@ -52,6 +57,12 @@
         "year": "2023",
         "story": "An international program on the SDGs, in Bangkok."
       },
+      "osaka": {
+        "name": "Osaka",
+        "program": "Osaka Expo 2025",
+        "year": "2025",
+        "story": "Took part as a competition finalist — representing Indonesia on a global stage."
+      },
       "korea": {
         "name": "Korea",
         "program": "KAIST Master Camp",
@@ -59,7 +70,7 @@
         "story": "A program at Korea's top science university, in Seoul."
       },
       "usa": {
-        "name": "USA",
+        "name": "Washington, D.C.",
         "program": "Leadership Program",
         "year": "2023",
         "story": "Selected for a leadership program. Applied on a whim and got in."
@@ -82,6 +93,23 @@
       "Setting off with my hiking club.",
       "Climbing through the night.",
       "Sunrise at the summit. Never forgetting this."
+    ],
+    "stages": [
+      {
+        "label": "Trailhead",
+        "meter": "~1,200 m",
+        "detail": "From the 5th station, starting the climb with my hiking club."
+      },
+      {
+        "label": "Night climb",
+        "meter": "~2,500 m",
+        "detail": "Headlamps on a dark trail. Fighting sleep all the way up."
+      },
+      {
+        "label": "Sunrise",
+        "meter": "3,776 m",
+        "detail": "Sunrise from the summit. A view I'll never forget."
+      }
     ]
   },
   "tech": {
@@ -92,7 +120,7 @@
         "body": "Jakarta. Learned how to build products people actually use."
       },
       {
-        "title": "Startup (on pause)",
+        "title": "Startup (stopped)",
         "body": "Took on healthcare. Hard — but I learned the most here."
       },
       {

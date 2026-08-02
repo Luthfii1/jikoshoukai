@@ -84,57 +84,47 @@ export function HeroBeat() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="mb-8 text-lg text-[var(--ink-soft)] md:text-xl"
+            className="text-lg text-[var(--ink-soft)] md:text-xl"
           >
             {t.hero.sub}
           </motion.p>
-
-          {/* Gag as delayed stamp — after brand lands */}
-          <motion.div
-            initial={{ opacity: 0, rotate: -8, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: -3, scale: 1 }}
-            transition={{ delay: 1.35, type: "spring", stiffness: 200, damping: 14 }}
-            className="mb-10 inline-flex origin-left items-stretch gap-0 overflow-hidden rounded-lg border-2 border-[var(--ink)]/10 bg-white/90 shadow-[0_12px_40px_rgba(26,26,46,0.08)] backdrop-blur"
-          >
-            <div className="relative flex flex-col items-center px-4 py-3">
-              <span className="text-[10px] font-bold tracking-wider text-[var(--ink)] uppercase">
-                {t.hero.naruto}
-              </span>
-              <span className="mt-0.5 text-[10px] text-[var(--accent-deep)]">
-                {t.hero.narutoNote}
-              </span>
-              <span className="absolute -top-2 -right-2 flex h-6 w-6 rotate-12 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] font-black text-white ring-2 ring-white">
-                OK
-              </span>
-            </div>
-            <div className="w-px bg-[var(--line)]" />
-            <div className="relative flex flex-col items-center px-4 py-3 opacity-45">
-              <span className="text-[10px] font-bold tracking-wider text-[var(--ink-mute)] line-through uppercase">
-                {t.hero.onePiece}
-              </span>
-              <span className="mt-0.5 text-[10px] text-[var(--ink-mute)]">
-                {t.hero.onePieceNote}
-              </span>
-              <span className="absolute -top-2 -right-2 flex h-6 w-6 -rotate-6 items-center justify-center rounded-full bg-[var(--ink)] text-[10px] font-black text-white ring-2 ring-white">
-                NG
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.a
-            href="#beat-explorer"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.55 }}
-            className="group inline-flex items-center gap-3 rounded-full border border-[var(--ink)] bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent)] hover:border-[var(--accent)]"
-          >
-            {t.hero.cta}
-            <span className="transition group-hover:translate-y-0.5" aria-hidden>
-              ↓
-            </span>
-          </motion.a>
         </div>
       </div>
+
+      {/* Anime gag — corner stamp, not in the hero reading flow */}
+      <motion.div
+        initial={{ opacity: 0, rotate: -10, scale: 0.75 }}
+        animate={{ opacity: 1, rotate: -4, scale: 1 }}
+        transition={{ delay: 1.45, type: "spring", stiffness: 200, damping: 14 }}
+        className="absolute right-4 bottom-24 z-10 hidden origin-bottom-right sm:block md:right-10 md:bottom-28"
+        aria-hidden
+      >
+        <div className="flex items-stretch overflow-hidden rounded-md border border-[var(--ink)]/12 bg-white/85 shadow-[0_8px_28px_rgba(26,26,46,0.1)] backdrop-blur-sm">
+          <div className="relative flex flex-col items-center px-3 py-2.5">
+            <span className="text-[9px] font-bold tracking-wider text-[var(--ink)]">
+              {t.hero.naruto}
+            </span>
+            <span className="mt-0.5 text-[8px] text-[var(--accent-deep)]">
+              {t.hero.narutoNote}
+            </span>
+            <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 rotate-12 items-center justify-center rounded-full bg-[var(--accent)] text-[8px] font-black text-white ring-2 ring-white">
+              OK
+            </span>
+          </div>
+          <div className="w-px bg-[var(--line)]" />
+          <div className="relative flex flex-col items-center px-3 py-2.5 opacity-40">
+            <span className="text-[9px] font-bold tracking-wider text-[var(--ink-mute)] line-through">
+              {t.hero.onePiece}
+            </span>
+            <span className="mt-0.5 text-[8px] text-[var(--ink-mute)]">
+              {t.hero.onePieceNote}
+            </span>
+            <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 -rotate-6 items-center justify-center rounded-full bg-[var(--ink)] text-[8px] font-black text-white ring-2 ring-white">
+              NG
+            </span>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

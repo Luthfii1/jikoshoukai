@@ -189,7 +189,7 @@ export function PresentHUD() {
 export function TopBar() {
   const { isPresent, beatId } = usePresentation();
   const { t } = useLocale();
-  const light = isPresent || beatId === "osaka" || beatId === "fuji";
+  const light = isPresent || beatId === "fuji";
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-4 py-3 md:px-6">

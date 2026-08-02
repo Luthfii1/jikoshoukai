@@ -2,7 +2,7 @@ export const BEAT_IDS = [
   "hero",
   "explorer",
   "world",
-  "osaka",
+  // "osaka" — hidden for now; Expo story lives on the world map stop
   "fuji",
   "tech",
   "obo",
@@ -15,9 +15,8 @@ export type BeatId = (typeof BEAT_IDS)[number];
 /** Max internal sub-steps per beat (0-indexed last step). Live mode advances these with →. */
 export const BEAT_SUBSTEPS: Record<BeatId, number> = {
   hero: 0,
-  explorer: 0,
-  world: 0,
-  osaka: 2,
+  explorer: 3, // 4 stamps: places → tech → food → products
+  world: 5, // Jakarta → Taiwan → Thailand → Osaka → Korea → Washington D.C.
   fuji: 2,
   tech: 2,
   obo: 0,
@@ -33,7 +32,6 @@ export const BEAT_STAMPS: Record<
   hero: { ja: "出発", en: "Start", mark: "★" },
   explorer: { ja: "Explorer", en: "Explorer", mark: "◆" },
   world: { ja: "世界", en: "World", mark: "◎" },
-  osaka: { ja: "万博", en: "Expo", mark: "▲" },
   fuji: { ja: "富士", en: "Fuji", mark: "⛰" },
   tech: { ja: "技術", en: "Tech", mark: "▣" },
   obo: { ja: "ObO", en: "ObO", mark: "●" },
@@ -46,7 +44,6 @@ export const BEAT_ATMOSPHERE: Record<BeatId, string> = {
   hero: "neutral",
   explorer: "soft",
   world: "cool",
-  osaka: "ink",
   fuji: "dawn",
   tech: "soft",
   obo: "warm",

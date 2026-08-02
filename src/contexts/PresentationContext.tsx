@@ -129,25 +129,50 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [isPresent, goNext, goPrev, goToBeat]);
 
-  // Observe which beat is in view (explore mode progress + sync present index)
+  // Track active beat via scroll position — IntersectionObserver fails on tall GSAP pin sections
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    BEAT_IDS.forEach((id, index) => {
-      const el = document.getElementById(`beat-${id}`);
-      if (!el) return;
-      const io = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.45) {
-            setBeatIndex(index);
-          }
-        },
-        { threshold: [0.45, 0.6] },
-      );
-      io.observe(el);
-      observers.push(io);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
+    if (isPresent) return;
+
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const probe = window.innerHeight * 0.4;
+      let current = 0;
+
+      for (let i = 0; i < BEAT_IDS.length; i++) {
+        const el = document.getElementById(`beat-${BEAT_IDS[i]}`);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        // Section that currently covers the probe line wins
+        if (rect.top <= probe && rect.bottom > probe) {
+          current = i;
+        }
+      }
+
+      setBeatIndex((prev) => (prev === current ? prev : current));
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    // Re-run after GSAP pins create spacers
+    const t1 = window.setTimeout(update, 100);
+    const t2 = window.setTimeout(update, 600);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
+  }, [isPresent]);
 
   const value = useMemo(
     () => ({

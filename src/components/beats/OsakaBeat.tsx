@@ -11,12 +11,13 @@ import { PhotoSlot, ScrollHint } from "@/components/Shell";
 
 export function OsakaBeat() {
   const { t, locale } = useLocale();
-  const { isPresent, subStep, beatId } = usePresentation();
+  const { isPresent, subStep } = usePresentation();
   const pinRef = useRef<HTMLDivElement>(null);
   const [localStep, setLocalStep] = useState(0);
   const photo = getPhoto("osaka-1", locale);
 
-  const step = isPresent && beatId === "osaka" ? subStep : localStep;
+  // Beat currently hidden from flow; keep present wiring ready when re-enabled
+  const step = localStep;
 
   useEffect(() => {
     if (!isPresent) return;

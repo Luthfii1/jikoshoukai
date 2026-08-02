@@ -9,7 +9,6 @@ import { JourneyRail, MobileProgress, PresentHUD, TopBar } from "@/components/Sh
 import { HeroBeat } from "@/components/beats/HeroBeat";
 import { ExplorerBeat } from "@/components/beats/ExplorerBeat";
 import { WorldBeat } from "@/components/beats/WorldBeat";
-import { OsakaBeat } from "@/components/beats/OsakaBeat";
 import { FujiBeat } from "@/components/beats/FujiBeat";
 import { TechBeat } from "@/components/beats/TechBeat";
 import { ObOBeat } from "@/components/beats/ObOBeat";
@@ -43,7 +42,6 @@ export function Experience() {
           <HeroBeat />
           <ExplorerBeat />
           <WorldBeat />
-          <OsakaBeat />
           <FujiBeat />
           <TechBeat />
           <ObOBeat />
