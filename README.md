@@ -11,10 +11,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-- **Explore mode (default):** free scroll + scroll-triggered animations  
-- **Presentation mode:** [http://localhost:3000/?present=1](http://localhost:3000/?present=1)
+- **Presentation mode (default):** keyboard Next/Prev HUD for live talks  
+- **Explore mode:** [http://localhost:3000/?explore=1](http://localhost:3000/?explore=1) — free scroll + scroll-triggered animations
 
-### Presenter controls (`?present=1`)
+### Presenter controls (default)
 
 | Key | Action |
 |-----|--------|

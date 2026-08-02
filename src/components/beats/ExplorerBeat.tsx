@@ -10,25 +10,30 @@ import { PhotoSlot, ScrollHint } from "@/components/Shell";
 import { getPhoto, type PhotoId } from "@/lib/photos";
 import { dwellStep } from "@/lib/scrollDwell";
 
-const WORD_KEYS = ["places", "tech", "food", "products"] as const;
+const WORD_KEYS = ["places", "food", "products"] as const;
 type WordKey = (typeof WORD_KEYS)[number];
+const WORD_COUNT = WORD_KEYS.length;
 
 const PIN_META: Record<
   WordKey,
-  { rotate: number; photo: PhotoId; pinColor: string }
+  { rotate: number; photo: PhotoId; pinColor: string; objectPos?: string }
 > = {
-  places: { rotate: -7, photo: "tokyo-1", pinColor: "#E8934A" },
-  tech: { rotate: 5, photo: "korea-1", pinColor: "#C9742F" },
-  food: { rotate: -3, photo: "thailand-1", pinColor: "#D4843A" },
+  places: {
+    rotate: -7,
+    photo: "place-1",
+    pinColor: "#E8934A",
+    objectPos: "object-[center_82%]",
+  },
+  food: { rotate: -3, photo: "food-1", pinColor: "#D4843A" },
   products: { rotate: 8, photo: "obo-screen-1", pinColor: "#E8934A" },
 };
 
-const POSITIONS: Record<WordKey, { top: string; left: string }> = {
-  places: { top: "12%", left: "68%" },
-  tech: { top: "52%", left: "74%" },
-  food: { top: "14%", left: "6%" },
-  products: { top: "58%", left: "8%" },
-};
+const POSITIONS: Record<WordKey, { top: string; left?: string; right?: string }> =
+  {
+    places: { top: "10%", right: "3%" },
+    food: { top: "58%", left: "2%" },
+    products: { top: "62%", right: "4%" },
+  };
 
 function pinsFromCount(count: number): Set<string> {
   return new Set(WORD_KEYS.slice(0, count));
@@ -103,7 +108,11 @@ function PinLightbox({
           ×
         </button>
         <div className="aspect-[4/3] overflow-hidden bg-[var(--bg-soft)]">
-          <PhotoSlot src={photo.src} alt={photo.alt} className="h-full w-full" />
+          <PhotoSlot
+            src={photo.src}
+            alt={photo.alt}
+            className={`h-full w-full ${meta.objectPos ?? ""}`}
+          />
         </div>
         <div className="mt-4 px-1 text-center md:mt-5">
           <p className="mb-1 text-[10px] font-semibold tracking-[0.2em] text-[var(--accent-deep)] uppercase">
@@ -135,15 +144,15 @@ export function ExplorerBeat() {
   const [progress, setProgress] = useState(0);
 
   const pinned = pinsFromCount(pinCount);
-  const showQuote = pinCount >= 4 || progress > 0.85;
+  const showQuote = pinCount >= WORD_COUNT || progress > 0.85;
 
   useEffect(() => {
     if (!isPresent) return;
     if (beatId !== "explorer") return;
-    const count = Math.min(4, subStep + 1);
+    const count = Math.min(WORD_COUNT, subStep + 1);
     setPinCount(count);
-    setActive(WORD_KEYS[Math.min(3, subStep)] ?? null);
-    setProgress(count / 4);
+    setActive(WORD_KEYS[Math.min(WORD_COUNT - 1, subStep)] ?? null);
+    setProgress(count / WORD_COUNT);
     setLightbox(null);
   }, [isPresent, subStep, beatId]);
 
@@ -155,7 +164,7 @@ export function ExplorerBeat() {
     gsap.registerPlugin(ScrollTrigger);
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setPinCount(4);
+      setPinCount(WORD_COUNT);
       setActive("products");
       setProgress(1);
       return;
@@ -165,7 +174,7 @@ export function ExplorerBeat() {
       ScrollTrigger.create({
         trigger: pin,
         start: "top top",
-        end: "+=420%",
+        end: "+=320%",
         pin: true,
         pinSpacing: true,
         scrub: 1.1,
@@ -175,7 +184,7 @@ export function ExplorerBeat() {
         onUpdate: (self) => {
           const p = self.progress;
           setProgress(p);
-          const step = dwellStep(p, 4, 0.05, 0.1);
+          const step = dwellStep(p, WORD_COUNT, 0.05, 0.1);
           if (step < 0) {
             setPinCount(0);
             setActive(null);
@@ -239,7 +248,7 @@ export function ExplorerBeat() {
           </span>
         </motion.div>
 
-        {/* Pinned polaroid photos — above content so clicks work */}
+        {/* Polaroids in side gutters — above for clicks, clear of copy */}
         <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
           <AnimatePresence>
             {WORD_KEYS.filter((k) => pinned.has(k)).map((key) => {
@@ -275,15 +284,19 @@ export function ExplorerBeat() {
                       : `View ${word.label}`
                   }
                   className="pointer-events-auto absolute hidden cursor-pointer md:block"
-                  style={{ top: pos.top, left: pos.left }}
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    right: pos.right,
+                  }}
                 >
-                  <div className="relative w-[132px] bg-white p-2 pb-7 shadow-[0_10px_28px_rgba(26,26,46,0.18)] ring-1 ring-black/5 transition hover:shadow-[0_16px_36px_rgba(26,26,46,0.22)] lg:w-[152px]">
+                  <div className="relative w-[120px] bg-white p-2 pb-7 shadow-[0_10px_28px_rgba(26,26,46,0.18)] ring-1 ring-black/5 transition hover:shadow-[0_16px_36px_rgba(26,26,46,0.22)] lg:w-[140px]">
                     <PushPin color={meta.pinColor} />
                     <div className="aspect-[4/3] overflow-hidden bg-[var(--bg-soft)]">
                       <PhotoSlot
                         src={photo.src}
                         alt={photo.alt}
-                        className="h-full w-full"
+                        className={`h-full w-full ${meta.objectPos ?? ""}`}
                       />
                     </div>
                     <p className="absolute right-2 bottom-2 left-2 truncate text-center text-[10px] font-bold tracking-wide text-[var(--ink)]">
@@ -296,16 +309,16 @@ export function ExplorerBeat() {
           </AnimatePresence>
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-20 md:px-10 md:pl-16">
+        <div className="pointer-events-none relative z-10 mx-auto w-full max-w-5xl px-6 py-20 md:px-10 md:pl-16 md:pr-[22%]">
           <h2
-            className={`mb-10 text-3xl font-bold text-[var(--ink)] md:mb-12 md:text-5xl ${
+            className={`pointer-events-none mb-10 max-w-xl text-3xl font-bold text-[var(--ink)] md:mb-12 md:text-5xl ${
               locale === "en" ? "en-display" : "display"
             }`}
           >
             {t.explorer.headline}
           </h2>
 
-          <div className="mb-8 flex flex-wrap gap-3 md:mb-10 md:gap-4">
+          <div className="pointer-events-auto mb-8 flex flex-wrap gap-3 md:mb-10 md:gap-4">
             {WORD_KEYS.map((key) => {
               const word = t.explorer.words[key];
               const isOn = active === key;
@@ -355,7 +368,7 @@ export function ExplorerBeat() {
           </div>
 
           {/* Mobile: stacked pinned photos */}
-          <div className="mb-8 flex gap-3 overflow-x-auto pb-2 md:hidden">
+          <div className="pointer-events-auto mb-8 flex gap-3 overflow-x-auto pb-2 md:hidden">
             <AnimatePresence>
               {WORD_KEYS.filter((k) => pinned.has(k)).map((key) => {
                 const meta = PIN_META[key];
@@ -376,7 +389,7 @@ export function ExplorerBeat() {
                       <PhotoSlot
                         src={photo.src}
                         alt={photo.alt}
-                        className="h-full w-full"
+                        className={`h-full w-full ${meta.objectPos ?? ""}`}
                       />
                     </div>
                     <span className="absolute right-1 bottom-1.5 left-1 truncate text-center text-[9px] font-bold">
@@ -388,7 +401,7 @@ export function ExplorerBeat() {
             </AnimatePresence>
           </div>
 
-          <div className="mb-10 min-h-[3.5rem]">
+          <div className="pointer-events-none mb-10 min-h-[3.5rem]">
             <AnimatePresence mode="wait">
               {active && pinned.has(active) ? (
                 <motion.div
@@ -424,9 +437,10 @@ export function ExplorerBeat() {
               y: showQuote ? 0 : 16,
             }}
             transition={{ duration: 0.45 }}
+            className="max-w-xl"
           >
             <blockquote
-              className={`max-w-3xl text-2xl font-bold leading-snug text-[var(--ink)] md:text-4xl ${
+              className={`text-2xl font-bold leading-snug text-[var(--ink)] md:text-4xl ${
                 locale === "en" ? "en-display" : "display"
               }`}
             >

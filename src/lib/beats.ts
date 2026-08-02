@@ -15,7 +15,7 @@ export type BeatId = (typeof BEAT_IDS)[number];
 /** Max internal sub-steps per beat (0-indexed last step). Live mode advances these with →. */
 export const BEAT_SUBSTEPS: Record<BeatId, number> = {
   hero: 0,
-  explorer: 3, // 4 stamps: places → tech → food → products
+  explorer: 2, // 3 stamps: places → food → products
   world: 5, // Jakarta → Taiwan → Thailand → Osaka → Korea → Washington D.C.
   fuji: 2,
   tech: 2,

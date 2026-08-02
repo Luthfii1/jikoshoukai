@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { useLocale } from "@/contexts/LocaleContext";
 import { BEAT_IDS, BEAT_STAMPS, BEAT_SUBSTEPS } from "@/lib/beats";
@@ -205,7 +206,7 @@ export function TopBar() {
       <div className="flex items-center gap-2">
         {!isPresent && (
           <a
-            href="?present=1"
+            href="/"
             className="hidden rounded-full border border-[var(--line)] bg-white/80 px-3 py-1.5 text-xs font-medium text-[var(--ink-soft)] backdrop-blur-md transition hover:border-[var(--accent)] hover:text-[var(--ink)] sm:inline-block"
           >
             {t.nav.present}
@@ -213,7 +214,7 @@ export function TopBar() {
         )}
         {isPresent && (
           <a
-            href="/"
+            href="?explore=1"
             className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-md transition hover:text-white"
           >
             {t.nav.explore}
@@ -230,11 +231,13 @@ export function PhotoSlot({
   alt,
   className = "",
   priority = false,
+  style,
 }: {
   src: string;
   alt: string;
   className?: string;
   priority?: boolean;
+  style?: CSSProperties;
 }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -244,6 +247,7 @@ export function PhotoSlot({
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       className={`object-cover ${className}`}
+      style={style}
     />
   );
 }

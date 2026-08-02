@@ -31,8 +31,12 @@ export function TokyoBeat() {
         <div className="grid gap-6 md:grid-cols-2">
           {[
             { card: t.tokyo.cardA, photo: a },
-            { card: t.tokyo.cardB, photo: b },
-          ].map(({ card, photo }, i) => (
+            {
+              card: t.tokyo.cardB,
+              photo: b,
+              objectPos: "center 28%",
+            },
+          ].map(({ card, photo, objectPos }, i) => (
             <motion.article
               key={card.title}
               initial={{ opacity: 0, y: 24 }}
@@ -47,6 +51,9 @@ export function TokyoBeat() {
                   src={photo.src}
                   alt={photo.alt}
                   className="h-full w-full transition duration-700 group-hover:scale-105"
+                  style={
+                    objectPos ? { objectPosition: objectPos } : undefined
+                  }
                 />
                 <span className="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[var(--ink)] backdrop-blur">
                   {card.badge}

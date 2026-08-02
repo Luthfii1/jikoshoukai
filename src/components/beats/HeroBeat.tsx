@@ -28,11 +28,12 @@ export function HeroBeat() {
             src={photo.src}
             alt={photo.alt}
             priority
-            className="h-full w-full"
+            className="h-full w-full object-[center_72%]"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-[var(--bg-primary)]/55 to-[var(--bg-primary)]/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_70%,transparent_20%,rgba(255,255,255,0.35)_100%)]" />
+        {/* Dark wash — light at top, stronger near copy */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/35 to-transparent" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-14 pt-32 md:px-10 md:pb-20">
@@ -42,13 +43,13 @@ export function HeroBeat() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="mb-5 text-[11px] font-medium tracking-[0.22em] text-[var(--ink-soft)] uppercase md:text-xs"
+            className="mb-5 text-[11px] font-medium tracking-[0.22em] text-white/70 uppercase md:text-xs"
           >
             {t.hero.eyebrow}
           </motion.p>
 
           <h1
-            className={`relative mb-2 text-[clamp(4.5rem,16vw,9.5rem)] font-black leading-[0.85] tracking-[-0.04em] text-[var(--ink)] ${
+            className={`relative mb-2 text-[clamp(4.5rem,16vw,9.5rem)] font-black leading-[0.85] tracking-[-0.04em] text-white ${
               locale === "en" ? "en-display" : "display"
             }`}
             aria-label={t.hero.name}
@@ -84,7 +85,7 @@ export function HeroBeat() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="text-lg text-[var(--ink-soft)] md:text-xl"
+            className="text-lg text-white/80 md:text-xl"
           >
             {t.hero.sub}
           </motion.p>
@@ -99,27 +100,27 @@ export function HeroBeat() {
         className="absolute right-4 bottom-24 z-10 hidden origin-bottom-right sm:block md:right-10 md:bottom-28"
         aria-hidden
       >
-        <div className="flex items-stretch overflow-hidden rounded-md border border-[var(--ink)]/12 bg-white/85 shadow-[0_8px_28px_rgba(26,26,46,0.1)] backdrop-blur-sm">
-          <div className="relative flex flex-col items-center px-3 py-2.5">
-            <span className="text-[9px] font-bold tracking-wider text-[var(--ink)]">
+        <div className="flex items-stretch overflow-visible rounded-lg border border-white/20 bg-white shadow-[0_12px_36px_rgba(0,0,0,0.35)]">
+          <div className="relative flex flex-col items-center justify-center px-4 py-3.5 md:px-5 md:py-4">
+            <span className="text-sm font-bold tracking-wide text-[var(--ink)] md:text-base">
               {t.hero.naruto}
             </span>
-            <span className="mt-0.5 text-[8px] text-[var(--accent-deep)]">
+            <span className="mt-1 text-[11px] font-medium text-[var(--accent-deep)] md:text-xs">
               {t.hero.narutoNote}
             </span>
-            <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 rotate-12 items-center justify-center rounded-full bg-[var(--accent)] text-[8px] font-black text-white ring-2 ring-white">
+            <span className="absolute -top-2.5 -right-2.5 flex h-7 w-7 rotate-12 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] font-black text-white ring-2 ring-white shadow-md">
               OK
             </span>
           </div>
-          <div className="w-px bg-[var(--line)]" />
-          <div className="relative flex flex-col items-center px-3 py-2.5 opacity-40">
-            <span className="text-[9px] font-bold tracking-wider text-[var(--ink-mute)] line-through">
+          <div className="w-px self-stretch bg-[var(--line)]" />
+          <div className="relative flex flex-col items-center justify-center px-4 py-3.5 opacity-55 md:px-5 md:py-4">
+            <span className="text-sm font-bold tracking-wide text-[var(--ink-mute)] line-through md:text-base">
               {t.hero.onePiece}
             </span>
-            <span className="mt-0.5 text-[8px] text-[var(--ink-mute)]">
+            <span className="mt-1 text-[11px] text-[var(--ink-mute)] md:text-xs">
               {t.hero.onePieceNote}
             </span>
-            <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 -rotate-6 items-center justify-center rounded-full bg-[var(--ink)] text-[8px] font-black text-white ring-2 ring-white">
+            <span className="absolute -top-2.5 -right-2.5 flex h-7 w-7 -rotate-6 items-center justify-center rounded-full bg-[var(--ink)] text-[10px] font-black text-white ring-2 ring-white shadow-md">
               NG
             </span>
           </div>

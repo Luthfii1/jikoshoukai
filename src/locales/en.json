@@ -23,7 +23,6 @@
     "headline": "One word that describes me.",
     "words": {
       "places": { "label": "Places", "hint": "I love wandering new cities." },
-      "tech": { "label": "Technology", "hint": "Curious? I touch it." },
       "food": { "label": "Food", "hint": "Unknown flavors are part of the adventure." },
       "products": { "label": "Products", "hint": "I build to find out." }
     },

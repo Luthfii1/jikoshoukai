@@ -117,28 +117,21 @@ export function ObOBeat() {
           </p>
         </div>
 
-        <div className="relative">
-          {/* Soft glow behind phone */}
+        {/* Screenshots already include device chrome — no CSS phone frame */}
+        <div className="relative w-full max-w-[280px] md:max-w-[320px]">
           <div
             aria-hidden
-            className="absolute top-1/2 left-1/2 h-64 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)]/25 blur-3xl"
+            className="absolute top-1/2 left-1/2 h-72 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)]/20 blur-3xl"
           />
 
           <div
-            className="relative mx-auto h-[420px] w-[210px] touch-pan-y overflow-hidden rounded-[2.2rem] border-[7px] border-[var(--ink)] bg-[var(--ink)] shadow-[0_40px_90px_rgba(26,26,46,0.28),inset_0_0_0_1px_rgba(255,255,255,0.08)] md:h-[500px] md:w-[250px]"
+            className="relative aspect-[9/19] w-full touch-pan-y cursor-grab overflow-hidden active:cursor-grabbing"
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerCancel={() => setDragging(false)}
             role="img"
             aria-label="ObO app preview"
           >
-            {/* Dynamic island */}
-            <div className="absolute top-2.5 left-1/2 z-20 h-6 w-[78px] -translate-x-1/2 rounded-full bg-black" />
-            {/* Screen glare */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-white/15 via-transparent to-transparent"
-            />
             <AnimatePresence mode="wait">
               <motion.div
                 key={screen}
@@ -146,12 +139,12 @@ export function ObOBeat() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -28 }}
                 transition={{ duration: 0.35 }}
-                className="h-full w-full"
+                className="absolute inset-0"
               >
                 <PhotoSlot
                   src={screens[screen].src}
                   alt={screens[screen].alt}
-                  className="h-full w-full"
+                  className="h-full w-full object-contain"
                 />
               </motion.div>
             </AnimatePresence>

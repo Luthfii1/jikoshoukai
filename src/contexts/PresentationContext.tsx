@@ -37,13 +37,19 @@ function scrollToBeat(index: number, instant = false) {
 }
 
 export function PresentationProvider({ children }: { children: ReactNode }) {
-  const [isPresent, setIsPresent] = useState(false);
+  // Default: present mode (office live). Opt into scroll explore via ?explore=1
+  const [isPresent, setIsPresent] = useState(true);
   const [beatIndex, setBeatIndex] = useState(0);
   const [subStep, setSubStep] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setIsPresent(params.get("present") === "1");
+    if (params.get("explore") === "1" || params.get("present") === "0") {
+      setIsPresent(false);
+      return;
+    }
+    // present=1 or no param → present mode
+    setIsPresent(true);
   }, []);
 
   useEffect(() => {

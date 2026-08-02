@@ -32,6 +32,8 @@ type Stop = {
   zoom: number;
   flag: string;
   photo?: PhotoId;
+  /** CSS object-position when portrait crops awkwardly */
+  objectPos?: string;
 };
 
 /** Reliable Carto light raster — Google-maps-like, no style JSON that can hang */
@@ -59,7 +61,8 @@ const ROUTE: Stop[] = [
     coords: [106.8456, -6.2088],
     zoom: 4.4,
     flag: "🇮🇩",
-    photo: "hero-portrait",
+    photo: "jakarta-1",
+    objectPos: "center 56%",
   },
   {
     key: "taiwan",
@@ -110,6 +113,7 @@ const ROUTE: Stop[] = [
     zoom: 5,
     flag: "🇺🇸",
     photo: "usa-1",
+    objectPos: "center 62%",
   },
 ];
 
@@ -182,10 +186,13 @@ function createPhotoMarkerEl(stop: Stop, photoSrc: string) {
   wrap.type = "button";
   wrap.className = "travel-photo-pin";
   wrap.style.cursor = "pointer";
+  const imgStyle = stop.objectPos
+    ? `style="object-position: ${stop.objectPos}"`
+    : "";
   wrap.innerHTML = `
     <span class="travel-photo-pin__needle"></span>
     <span class="travel-photo-pin__card">
-      <img src="${photoSrc}" alt="" />
+      <img src="${photoSrc}" alt="" ${imgStyle} />
       <span class="travel-photo-pin__label">${stop.flag} ${stop.labelEn}</span>
     </span>
   `;
@@ -542,6 +549,11 @@ export function WorldBeat() {
                         src={getPhoto(currentStop.photo, locale).src}
                         alt={getPhoto(currentStop.photo, locale).alt}
                         className="h-full w-full"
+                        style={
+                          currentStop.objectPos
+                            ? { objectPosition: currentStop.objectPos }
+                            : undefined
+                        }
                       />
                     </div>
                   )}
@@ -648,6 +660,7 @@ function CountryCard({
   onClose: () => void;
 }) {
   const { t, locale } = useLocale();
+  const { isPresent } = usePresentation();
   const c = t.world.countries[countryKey];
   const stop = ROUTE.find((r) => r.countryKey === countryKey)!;
   const photo = getPhoto(stop.photo ?? "taiwan-1", locale);
@@ -657,10 +670,21 @@ function CountryCard({
       initial={{ opacity: 0, y: 20, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10 }}
-      className="absolute right-4 bottom-16 z-30 w-[min(360px,calc(100%-2rem))] overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[0_24px_70px_rgba(26,26,46,0.2)] md:right-10 md:bottom-20"
+      className={`absolute right-4 bottom-16 z-30 overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[0_24px_70px_rgba(26,26,46,0.2)] md:right-10 md:bottom-20 ${
+        isPresent
+          ? "w-[min(520px,calc(100%-2rem))]"
+          : "w-[min(400px,calc(100%-2rem))]"
+      }`}
     >
-      <div className="relative h-44">
-        <PhotoSlot src={photo.src} alt={photo.alt} className="h-full w-full" />
+      <div className={`relative ${isPresent ? "h-56 md:h-64" : "h-48 md:h-52"}`}>
+        <PhotoSlot
+          src={photo.src}
+          alt={photo.alt}
+          className="h-full w-full"
+          style={
+            stop.objectPos ? { objectPosition: stop.objectPos } : undefined
+          }
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         <button
           type="button"
@@ -670,17 +694,27 @@ function CountryCard({
         >
           ×
         </button>
-        <div className="absolute bottom-3 left-3 text-white">
-          <p className="text-2xl font-bold">
+        <div className="absolute bottom-3 left-3 text-white md:bottom-4 md:left-4">
+          <p
+            className={`font-bold ${isPresent ? "text-3xl" : "text-2xl"}`}
+          >
             {stop.flag} {locale === "ja" ? stop.labelJa : stop.labelEn}
           </p>
-          <p className="text-xs text-white/80">
+          <p
+            className={`text-white/80 ${isPresent ? "text-sm" : "text-xs"}`}
+          >
             {c.year} · {c.program}
           </p>
         </div>
       </div>
-      <div className="p-4">
-        <p className="text-sm leading-relaxed text-[var(--ink-soft)]">{c.story}</p>
+      <div className={isPresent ? "p-5 md:p-6" : "p-4"}>
+        <p
+          className={`leading-relaxed text-[var(--ink-soft)] ${
+            isPresent ? "text-base md:text-lg" : "text-sm"
+          }`}
+        >
+          {c.story}
+        </p>
       </div>
     </motion.div>
   );
